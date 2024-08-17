@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, Avatar, InputBase, Box, Hidden } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, Avatar, InputBase, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import MenuIcon from '@mui/icons-material/Menu';
 import { alpha, styled } from '@mui/material/styles';
 
 const Search = styled('div')(({ theme }) => ({
@@ -44,7 +45,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-const Navbar = ({ onSearch }) => {
+const Navbar = ({ onSearch, handleDrawerToggle }) => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const handleSearchChange = (event) => {
@@ -59,8 +60,16 @@ const Navbar = ({ onSearch }) => {
     return (
         <AppBar position="fixed">
             <Toolbar sx={{ px: 2 }}>
-              
-                <Typography variant="h6" style={{ flexGrow: 1 }}>
+                <IconButton
+                    color="inherit"
+                    aria-label="open drawer"
+                    edge="start"
+                    onClick={handleDrawerToggle}
+                    sx={{ marginRight: 2 }}
+                >
+                    <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" sx={{ flexGrow: 1 }}>
                     News Website
                 </Typography>
                 <Box display="flex" alignItems="center">
@@ -77,13 +86,11 @@ const Navbar = ({ onSearch }) => {
                             />
                         </Search>
                     </form>
-                    <Hidden xsDown>
-                        <Avatar
-                            alt="User"
-                            src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" // Replace with your user's image URL
-                            style={{ marginLeft: '16px' }}
-                        />
-                    </Hidden>
+                    <Avatar
+                        alt="User"
+                        src="https://images.pexels.com/photos/846741/pexels-photo-846741.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                        sx={{ marginLeft: 2 }}
+                    />
                 </Box>
             </Toolbar>
         </AppBar>
