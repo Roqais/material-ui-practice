@@ -7,7 +7,6 @@ function App() {
     const [news, setNews] = useState([]);
     const [query, setQuery] = useState('new'); // Default query
 
-    const API_KEY = '8caaa80ac58a4f77bed3b8ca2cf0f49f'; // Your API key
     const DUMMY_IMAGE = 'https://via.placeholder.com/400x200?text=No+Image+Available'; // URL for dummy image
 
     const handleSearch = (searchQuery) => {
@@ -17,7 +16,12 @@ function App() {
     useEffect(() => {
         const fetchNews = async () => {
             try {
-                const response = await axios.get(`https://newsapi.org/v2/everything?q=${query}&apiKey=${API_KEY}`);
+                const response = await axios.get('https://newsapi.org/v2/everything', {
+                    params: {
+                      q: query || 'New', // Use 'latest' or another keyword as default
+                      apiKey: import.meta.env.VITE_NEWS_API_KEY, // Make sure your API key is set in .env
+                    },
+                  });
                 const filteredArticles = response.data.articles.filter(article => {
                     // Filter out articles with images from 'gizmodo.com/app/uploads' and those with null authors
                     return article.author && !(article.urlToImage && article.urlToImage.includes('gizmodo.com/app/uploads'));
